@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>ჩვენი ქრისტიანული ცხოვრება და მსახურება — შეხვედრის განრიგი</title>
+  <meta property="og:title" content="კრების შეხვედრის განრიგი — ცხოვრება და მსახურება" />
+  <meta property="og:description" content="შუა კვირის შეხვედრის დავალებების განრიგი (1-ლი და მე-2 კლასი). განახლებები აისახება ავტომატურად." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans Georgian', sans-serif;
+      background-color: #f1f5f9;
+      color: #1e293b;
+    }
+    .sec-treasures { background-color: #2a6b77; color: #ffffff; }
+    .sec-treasures-border { border-color: #2a6b77; }
+    .sec-ministry { background-color: #9b6d1b; color: #ffffff; }
+    .sec-ministry-border { border-color: #9b6d1b; }
+    .sec-living { background-color: #8c1d40; color: #ffffff; }
+    .sec-living-border { border-color: #8c1d40; }
+    .highlight-match {
+      background-color: #fef08a !important;
+      color: #713f12 !important;
+      font-weight: 700 !important;
+      border-radius: 6px;
+      padding: 2px 6px;
+      box-shadow: 0 0 0 2px #eab308;
+    }
+    @media print {
+      body { background: #fff !important; }
+      .no-print { display: none !important; }
+      .week-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #cbd5e1 !important; margin-bottom: 18px !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-16">
+
+  <!-- Top Header -->
+  <header class="bg-[#1e3a5f] text-white shadow-md sticky top-0 z-30 no-print">
+    <div class="max-w-4xl mx-auto px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-lg bg-white/15 flex items-center justify-center text-lg font-bold shrink-0">📖</div>
+        <div>
+          <h1 class="text-sm sm:text-lg font-bold leading-tight">ჩვენი ქრისტიანული ცხოვრება და მსახურება</h1>
+          <div class="flex items-center gap-2 text-[11px] sm:text-xs text-blue-200">
+            <span id="live-status-dot" class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="live-status-text">ცოცხალი განრიგი (ავტომატური განახლება)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <button onclick="copyViberLink()" class="px-2.5 py-1.5 rounded-lg bg-[#7360f2] hover:bg-[#5f4be0] text-white text-xs font-semibold flex items-center gap-1 shadow-sm transition" title="Viber-ში გასაზიარებელი ბმულის კოპირება">
+          <span>💜</span> <span class="hidden sm:inline">Viber ბმული</span>
+        </button>
+        <button onclick="window.print()" class="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1 transition" title="ამობეჭდვა">
+          <span>🖨️</span> <span class="hidden sm:inline">ბეჭდვა</span>
+        </button>
+        <button id="admin-toggle-btn" onclick="toggleAdminAuth()" class="px-2.5 py-1.5 rounded-lg bg-amber-500/90 hover:bg-amber-500 text-slate-950 text-xs font-bold flex items-center gap-1 shadow-sm transition">
+          <span>🔒</span> <span id="admin-btn-label">ადმინი</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-2.5 sm:px-6 pt-4">
+
+    <!-- Admin Control Bar (Visible only when Admin is unlocked) -->
+    <div id="admin-toolbar" class="hidden no-print mb-4 bg-amber-50 border-2 border-amber-400 rounded-xl p-3 sm:p-4 shadow-sm">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🛠️</span>
+          <div>
+            <h2 class="text-sm font-bold text-amber-950">ადმინისტრატორის რეჟიმი ჩართულია</h2>
+            <p class="text-xs text-amber-800">ჩაასწორეთ ნებისმიერი გრაფა პირდაპირ ქვემოთ ან Google Sheet-ში და დააჭირეთ „შენახვას“.</p>
+          </div>
+        </div>
+        <button onclick="logoutAdmin()" class="text-xs font-semibold text-red-700 hover:underline px-2 py-1">გამოსვლა ✖</button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="saveToCloud()" id="save-cloud-btn" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow flex items-center gap-1.5 transition">
+          <span>💾</span> <span>ცვლილებების შენახვა (განახლება)</span>
+        </button>
+        <button onclick="addNewWeek()" class="px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold shadow-sm flex items-center gap-1 transition">
+          <span>➕</span> <span>ახალი კვირის დამატება</span>
+        </button>
+        <a id="google-sheet-link" href="https://docs.google.com/spreadsheets/d/1P31e0ZMTuguYPJ6plrKIw1oOTSMerVFnFTrQLEmDA6g/edit" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition">
+          <span>📊</span> <span>Google Sheet-ში გახსნა</span>
+        </a>
+      </div>
+      <div id="save-feedback" class="hidden mt-2 text-xs font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 rounded-lg px-3 py-1.5"></div>
+    </div>
+
+    <!-- Search & Week Filter Bar -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-3 mb-4 no-print">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+        <div class="relative flex-1">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
+          <input
+            id="search-input"
+            type="text"
+            list="publishers-datalist"
+            oninput="handleSearch(this.value)"
+            placeholder="მოძებნეთ თქვენი სახელი და გვარი (მაგ: ირაკლი პირტახია)..."
+            class="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-300 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-xs font-bold">✖</button>
+        </div>
+
+        <!-- Week Filter Pills -->
+        <div id="week-tabs" class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0"></div>
+      </div>
+
+      <!-- Search Match Summary -->
+      <div id="search-summary" class="hidden mt-2.5 pt-2.5 border-t border-slate-100 text-xs text-slate-700"></div>
+    </div>
+
+    <!-- Autocomplete Datalist of all 128 Publishers -->
+    <datalist id="publishers-datalist"></datalist>
+
+    <!-- Schedule Container -->
+    <div id="schedule-container" class="space-y-6">
+      <div class="bg-white rounded-xl p-8 text-center text-slate-500 text-sm shadow-sm border border-slate-200">
+        იტვირთება განრიგი...
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 hidden bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg"></div>
+
+  <script>
+    const GH_REPO_SLUG = 'gochaiaseshvili-gif/kreba';
+    const GH_ENC_TOKEN = 'X11YZgg4OAouAS04MQcNJVsaJAhbBEE6DgtQVzBULTcwM18hXlBRTw==';
+    const GH_XOR_KEY = '8579_iyidebaa_gocha';
+    const DEFAULT_SHEET_ID = '1P31e0ZMTuguYPJ6plrKIw1oOTSMerVFnFTrQLEmDA6g';
+    const ADMIN_PIN = '1914';
+
+    let appState = {
+      updatedAt: 0,
+      sheetId: DEFAULT_SHEET_ID,
+      sheetSig: '',
+      publishers: [],
+      weeks: []
+    };
+
+    let currentLiveSheetSig = '';
+    let isAdmin = localStorage.getItem('kreba_admin_unlocked') === '1';
+    let selectedWeekFilter = 'ALL';
+    let searchQuery = '';
+
+    function getGithubCloudToken() {
+      try {
+        const raw = atob(GH_ENC_TOKEN);
+        let out = '';
+        for (let i = 0; i < raw.length; i++) {
+          out += String.fromCharCode(raw.charCodeAt(i) ^ GH_XOR_KEY.charCodeAt(i % GH_XOR_KEY.length));
+        }
+        return out;
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function utf8ToBase64(str) {
+      const bytes = new TextEncoder().encode(str);
+      let binary = '';
+      const chunkSize = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
+      }
+      return btoa(binary);
+    }
+
+    function base64ToUtf8(b64) {
+      const clean = b64.replace(/\s/g, '');
+      const binary = atob(clean);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      return new TextDecoder('utf-8').decode(bytes);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => t.classList.add('hidden'), 3200);
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function highlightName(text) {
+      const safe = escapeHtml(text);
+      if (!searchQuery || searchQuery.trim().length < 2) return safe || '<span class="text-slate-400 italic">—</span>';
+      if (!safe) return '<span class="text-slate-400 italic">—</span>';
+      const q = searchQuery.trim().toLowerCase();
+      if (safe.toLowerCase().includes(q)) {
+        return `<span class="highlight-match">${safe}</span>`;
+      }
+      return safe;
+    }
+
+    // Fetch live Google Sheet via JSONP (works on all mobile browsers with zero CORS issues)
+    function fetchGoogleSheetLive(sheetId) {
+      return new Promise((resolve) => {
+        const cbName = '_gvizCb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+        const timer = setTimeout(() => {
+          cleanup();
+          resolve(null);
+        }, 6500);
+
+        function cleanup() {
+          clearTimeout(timer);
+          delete window[cbName];
+          const sc = document.getElementById(cbName);
+          if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
+        }
+
+        window[cbName] = function(resp) {
+          cleanup();
+          if (!resp || resp.status !== 'ok' || !resp.table) {
+            resolve(null);
+            return;
+          }
+          resolve(resp);
+        };
+
+        const script = document.createElement('script');
+        script.id = cbName;
+        script.src = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json;responseHandler:${cbName}&t=${Date.now()}`;
+        script.onerror = () => {
+          cleanup();
+          resolve(null);
+        };
+        document.body.appendChild(script);
+      });
+    }
+
+    // Convert Google Sheet rows into structured weeks array
+    function parseSheetRowsToWeeks(table) {
+      if (!table || ! Array.isArray(table.rows)) return [];
+      const weeksMap = new Map();
+      const weeksList = [];
+
+      for (let i = 0; i < table.rows.length; i++) {
+        const r = table.rows[i];
+        if (!r || !r.c) continue;
+        const c0 = r.c[0] && r.c[0].v != null ? String(r.c[0].v).trim() : '';
+        const c1 = r.c[1] && r.c[1].v != null ? String(r.c[1].v).trim() : '';
+        const c2 = r.c[2] && r.c[2].v != null ? String(r.c[2].v).trim() : '';
+        const c3 = r.c[3] && r.c[3].v != null ? String(r.c[3].v).trim() : '';
+        const c4 = r.c[4] && r.c[4].v != null ? String(r.c[4].v).trim() : '';
+
+        if (!c0 || c0 === 'კვირა (თარიღი)') continue;
+
+        let wk = weeksMap.get(c0);
+        if (!wk) {
+          wk = {
+            id: 'w-' + i + '-' + Date.now(),
+            date: c0,
+            chairman: '',
+            openingPrayer: '',
+            treasuresTalk: '',
+            spiritualGems: '',
+            bibleReading1: '',
+            bibleReading2: '',
+            ministry: [],
+            living: [],
+            cbsConductor: '',
+            cbsReader: '',
+            closingPrayer: ''
+          };
+          weeksMap.set(c0, wk);
+          weeksList.push(wk);
+        }
+
+        const sec = c1.toLowerCase();
+        const item = c2.toLowerCase();
+
+        if (item.includes('თავმჯდომარე')) {
+          wk.chairman = c3;
+        } else if (sec.includes('დასაწყისი') && item.includes('ლოცვა')) {
+          wk.openingPrayer = c3;
+        } else if (item.includes('საუნჯე') || (sec.includes('საუნჯე') && item.includes('მოხსენება'))) {
+          wk.treasuresTalk = c3;
+        } else if (item.includes('სიღრმეები')) {
+          wk.spiritualGems = c3;
+        } else if (item.includes('ბიბლიის კითხვა')) {
+          wk.bibleReading1 = c3;
+          wk.bibleReading2 = c4;
+        } else if (sec.includes('მსახურება')) {
+          wk.ministry.push({
+            title: c2 || 'საუბრის წამოწყება',
+            class1: c3,
+            class2: c4
+          });
+        } else if (item.includes('კრების ბიბლიის შესწავლა') || item.includes('ბიბლიის შესწავლა')) {
+          wk.cbsConductor = c3;
+          wk.cbsReader = c4;
+        } else if (item.includes('დასკვნითი ლოცვა') || (sec.includes('ცხოვრება') && item === 'ლოცვა')) {
+          wk.closingPrayer = c3;
+        } else if (sec.includes('ცხოვრება')) {
+          wk.living.push({
+            title: c2 || 'ადგილობრივი მოთხოვნილებები',
+            speaker: c3
+          });
+        }
+      }
+      return weeksList;
+    }
+
+    async function fetchCloudScheduleJson() {
+      const ts = Date.now();
+      const token = getGithubCloudToken();
+      try {
+        const headers = { Accept: 'application/vnd.github+json' };
+        if (token) headers.Authorization = `Bearer ${token}`;
+        const rApi = await fetch(`https://api.github.com/repos/${GH_REPO_SLUG}/contents/schedule-data.json?t=${ts}`, {
+          headers,
+          cache: 'no-store'
+        });
+        if (rApi.ok) {
+          const meta = await rApi.json();
+          if (meta && meta.content) {
+            return JSON.parse(base64ToUtf8(meta.content));
+          }
+        }
+      } catch (e) {}
+
+      try {
+        const rLocal = await fetch(`./schedule-data.json?t=${ts}`, { cache: 'no-store' });
+        if (rLocal.ok) return await rLocal.json();
+      } catch (e) {}
+      return null;
+    }
+
+    async function loadSchedule(isBackgroundPoll = false) {
+      // Do not overwrite while admin is actively editing inputs
+      if (isBackgroundPoll && isAdmin && document.activeElement && ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        return;
+      }
+
+      const [cloudData, sheetResp] = await Promise.all([
+        fetchCloudScheduleJson(),
+        fetchGoogleSheetLive(appState.sheetId || DEFAULT_SHEET_ID)
+      ]);
+
+      let nextState = cloudData ? Object.assign({}, cloudData) : Object.assign({}, appState);
+
+      if (sheetResp && sheetResp.sig) {
+        currentLiveSheetSig = String(sheetResp.sig);
+        // If Google Sheet signature differs from the one recorded at last web save, Google Sheet has newer edits!
+        if (!cloudData || String(cloudData.sheetSig || '') !== currentLiveSheetSig) {
+          const sheetWeeks = parseSheetRowsToWeeks(sheetResp.table);
+          if (sheetWeeks.length > 0) {
+            nextState.weeks = sheetWeeks;
+          }
+        }
+      }
+
+      const prevJson = JSON.stringify(appState.weeks);
+      const nextJson = JSON.stringify(nextState.weeks);
+      appState = nextState;
+
+      populatePublishersDatalist();
+      if (!isBackgroundPoll || prevJson !== nextJson) {
+        renderAll();
+      }
+    }
+
+    function populatePublishersDatalist() {
+      const dl = document.getElementById('publishers-datalist');
+      if (!dl || !Array.isArray(appState.publishers)) return;
+      dl.innerHTML = appState.publishers.map(p => `<option value="${escapeHtml(p)}"></option>`).join('');
+    }
+
+    function updateAdminUI() {
+      const toolbar = document.getElementById('admin-toolbar');
+      const btnLabel = document.getElementById('admin-btn-label');
+      if (isAdmin) {
+        toolbar.classList.remove('hidden');
+        btnLabel.textContent = 'ადმინი (ჩართულია)';
+      } else {
+        toolbar.classList.add('hidden');
+        btnLabel.textContent = 'ადმინი';
+      }
+    }
+
+    function toggleAdminAuth() {
+      if (isAdmin) {
+        const toolbar = document.getElementById('admin-toolbar');
+        toolbar.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      const pin = prompt('შეიყვანეთ ადმინისტრატორის კოდი (პაროლი):');
+      if (pin === null) return;
+      if (pin.trim() === ADMIN_PIN) {
+        isAdmin = true;
+        localStorage.setItem('kreba_admin_unlocked', '1');
+        updateAdminUI();
+        renderAll();
+        showToast('✅ ადმინისტრატორის რეჟიმი ჩაირთო');
+      } else {
+        alert('არასწორი კოდი!');
+      }
+    }
+
+    function logoutAdmin() {
+      isAdmin = false;
+      localStorage.removeItem('kreba_admin_unlocked');
+      updateAdminUI();
+      renderAll();
+      showToast('🔒 გამოხვედით ადმინისტრატორის რეჟიმიდან');
+    }
+
+    function handleSearch(val) {
+      searchQuery = val || '';
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (searchQuery.trim().length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+      renderAll();
+    }
+
+    function clearSearch() {
+      const inp = document.getElementById('search-input');
+      inp.value = '';
+      handleSearch('');
+    }
+
+    function selectWeekFilter(wkDate) {
+      selectedWeekFilter = wkDate;
+      renderAll();
+    }
+
+    function renderWeekTabs() {
+      const tabsEl = document.getElementById('week-tabs');
+      if (!tabsEl) return;
+      const weeks = appState.weeks || [];
+      let html = `<button onclick="selectWeekFilter('ALL')" class="px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition ${selectedWeekFilter === 'ALL' ? 'bg-[#1e3a5f] text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">ყველა კვირა (${weeks.length})</button>`;
+      weeks.forEach((wk) => {
+        const active = selectedWeekFilter === wk.date;
+        html += `<button onclick="selectWeekFilter('${escapeHtml(wk.date)}')" class="px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition ${active ? 'bg-[#1e3a5f] text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">📅 ${escapeHtml(wk.date || 'ახალი კვირა')}</button>`;
+      });
+      tabsEl.innerHTML = html;
+    }
+
+    function renderSearchSummary() {
+      const sumEl = document.getElementById('search-summary');
+      if (!searchQuery || searchQuery.trim().length < 2) {
+        sumEl.classList.add('hidden');
+        return;
+      }
+      const q = searchQuery.trim().toLowerCase();
+      const matches = [];
+
+      (appState.weeks || []).forEach((wk) => {
+        const d = wk.date || '';
+        const check = (label, val) => {
+          if (val && String(val).toLowerCase().includes(q)) {
+            matches.push(`<li>📅 <b>${escapeHtml(d)}</b> — ${escapeHtml(label)}: <span class="highlight-match">${escapeHtml(val)}</span></li>`);
+          }
+        };
+        check('თავმჯდომარე', wk.chairman);
+        check('დასაწყისი ლოცვა', wk.openingPrayer);
+        check('ღვთის სიტყვის საუნჯე (10 წთ)', wk.treasuresTalk);
+        check('ღვთის სიტყვის სიღრმეები (10 წთ)', wk.spiritualGems);
+        check('ბიბლიის კითხვა (1-კლასი)', wk.bibleReading1);
+        check('ბიბლიის კითხვა (2-კლასი)', wk.bibleReading2);
+        (wk.ministry || []).forEach((m) => {
+          check(`${m.title} (1-კლასი)`, m.class1);
+          check(`${m.title} (2-კლასი)`, m.class2);
+        });
+        (wk.living || []).forEach((l) => {
+          check(l.title, l.speaker);
+        });
+        check('კრების ბიბლიის შესწავლა (ჩამტარებელი)', wk.cbsConductor);
+        check('კრების ბიბლიის შესწავლა (წამკითხველი)', wk.cbsReader);
+        check('დასკვნითი ლოცვა', wk.closingPrayer);
+      });
+
+      sumEl.classList.remove('hidden');
+      if (matches.length === 0) {
+        sumEl.innerHTML = `<div class="text-amber-800 font-medium">„${escapeHtml(searchQuery)}“ — ამ სახელით დავალება ვერ მოიძებნა.</div>`;
+      } else {
+        sumEl.innerHTML = `<div class="font-bold text-emerald-900 mb-1">✅ ნაპოვნია ${matches.length} დავალება:</div><ul class="space-y-1 pl-1">${matches.join('')}</ul>`;
+      }
+    }
+
+    function renderField(wkIdx, fieldKey, value, placeholder = 'სახელი და გვარი') {
+      if (!isAdmin) {
+        return `<span class="font-semibold text-slate-900">${highlightName(value)}</span>`;
+      }
+      return `<input type="text" list="publishers-datalist" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}" onchange="updateWeekField(${wkIdx}, '${fieldKey}', this.value)" class="w-full px-2 py-1 rounded border border-amber-400 bg-amber-50/60 text-slate-900 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500" />`;
+    }
+
+    function renderAll() {
+      updateAdminUI();
+      renderWeekTabs();
+      renderSearchSummary();
+
+      const container = document.getElementById('schedule-container');
+      const weeks = appState.weeks || [];
+      if (weeks.length === 0) {
+        container.innerHTML = `<div class="bg-white rounded-xl p-8 text-center text-slate-500">განრიგი ცარიელია.</div>`;
+        return;
+      }
+
+      let html = '';
+      weeks.forEach((wk, wkIdx) => {
+        if (selectedWeekFilter !== 'ALL' && wk.date !== selectedWeekFilter) return;
+
+        html += `
+        <section class="week-card bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+          <!-- Week Top Header -->
+          <div class="bg-slate-800 text-white px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">📅</span>
+              ${isAdmin
+                ? `<input type="text" value="${escapeHtml(wk.date)}" onchange="updateWeekField(${wkIdx}, 'date', this.value)" placeholder="მაგ: 24 ნოემბერი" class="px-2.5 py-1 rounded bg-amber-100 text-slate-950 font-extrabold text-sm sm:text-base border border-amber-400" />`
+                : `<h2 class="text-base sm:text-lg font-extrabold tracking-wide">${escapeHtml(wk.date)}</h2>`
+              }
+            </div>
+            ${isAdmin ? `
+              <div class="flex items-center gap-1.5 no-print">
+                <button onclick="moveWeek(${wkIdx}, -1)" class="px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-xs" title="ზემოთ ატანა">⬆️</button>
+                <button onclick="moveWeek(${wkIdx}, 1)" class="px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-xs" title="ქვემოთ ჩამოტანა">⬇️</button>
+                <button onclick="deleteWeek(${wkIdx})" class="px-2.5 py-1 rounded bg-red-600 hover:bg-red-700 text-white text-xs font-semibold">🗑️ წაშლა</button>
+              </div>
+            ` : ''}
+          </div>
+
+          <!-- Chairman & Opening Prayer -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 px-4 py-2.5 bg-slate-100 border-b border-slate-200 text-xs sm:text-sm">
+            <div class="flex items-center gap-2">
+              <span class="text-slate-600 font-medium shrink-0">თავმჯდომარე:</span>
+              <div class="flex-1">${renderField(wkIdx, 'chairman', wk.chairman)}</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-slate-600 font-medium shrink-0">ლოცვა:</span>
+              <div class="flex-1">${renderField(wkIdx, 'openingPrayer', wk.openingPrayer)}</div>
+            </div>
+          </div>
+
+          <!-- SECTION 1: TREASURES FROM GOD'S WORD -->
+          <div class="sec-treasures px-4 py-1.5 text-xs sm:text-sm font-bold tracking-wide uppercase flex items-center gap-1.5">
+            <span>💎</span> <span>ღვთის სიტყვის საუნჯე</span>
+          </div>
+          <div class="p-3 sm:p-4 space-y-2.5 text-xs sm:text-sm border-b border-slate-200">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div class="bg-slate-50 rounded-lg p-2.5 border border-slate-200/80">
+                <div class="text-[11px] font-semibold text-teal-800 mb-1">მოხსენება (10 წთ) — ღვთის სიტყვის საუნჯე:</div>
+                ${renderField(wkIdx, 'treasuresTalk', wk.treasuresTalk)}
+              </div>
+              <div class="bg-slate-50 rounded-lg p-2.5 border border-slate-200/80">
+                <div class="text-[11px] font-semibold text-teal-800 mb-1">ღვთის სიტყვის სიღრმეები (10 წთ):</div>
+                ${renderField(wkIdx, 'spiritualGems', wk.spiritualGems)}
+              </div>
+            </div>
+
+            <!-- Bible Reading (1st and 2nd Class) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+              <div class="bg-teal-50/50 rounded-lg p-2.5 border border-teal-200">
+                <div class="flex items-center justify-between text-[11px] font-bold text-teal-900 mb-1">
+                  <span>ბიბლიის კითხვა (4 წთ)</span>
+                  <span class="px-1.5 py-0.5 rounded bg-teal-700 text-white text-[10px]">1-კლასი</span>
+                </div>
+                ${renderField(wkIdx, 'bibleReading1', wk.bibleReading1)}
+              </div>
+              <div class="bg-teal-50/50 rounded-lg p-2.5 border border-teal-200">
+                <div class="flex items-center justify-between text-[11px] font-bold text-teal-900 mb-1">
+                  <span>ბიბლიის კითხვა (4 წთ)</span>
+                  <span class="px-1.5 py-0.5 rounded bg-slate-600 text-white text-[10px]">2-კლასი</span>
+                </div>
+                ${renderField(wkIdx, 'bibleReading2', wk.bibleReading2)}
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 2: APPLY YOURSELF TO THE FIELD MINISTRY -->
+          <div class="sec-ministry px-4 py-1.5 text-xs sm:text-sm font-bold tracking-wide uppercase flex items-center justify-between">
+            <div class="flex items-center gap-1.5"><span>🌾</span> <span>ქრისტიანული მსახურება</span></div>
+            ${isAdmin ? `<button onclick="addMinistryRow(${wkIdx})" class="px-2 py-0.5 rounded bg-white text-amber-900 text-xs font-bold shadow-sm hover:bg-amber-50">+ დავალების დამატება</button>` : ''}
+          </div>
+          <div class="p-3 sm:p-4 border-b border-slate-200">
+            <!-- Class Headers -->
+            <div class="hidden sm:grid sm:grid-cols-2 gap-3 mb-2 text-xs font-bold text-amber-900">
+              <div class="bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5 text-center">1-ლი კლასი (მთავარი დარბაზი)</div>
+              <div class="bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5 text-center">მე-2 კლასი</div>
+            </div>
+
+            <div class="space-y-2.5">
+              ${(wk.ministry || []).map((m, mIdx) => `
+                <div class="rounded-xl border border-amber-200/90 bg-amber-50/30 p-2.5">
+                  <div class="flex items-center justify-between gap-2 mb-1.5">
+                    ${isAdmin
+                      ? `<input type="text" value="${escapeHtml(m.title)}" onchange="updateMinistryField(${wkIdx}, ${mIdx}, 'title', this.value)" placeholder="დავალების სათაური" class="px-2 py-0.5 rounded border border-amber-400 bg-white text-xs font-bold text-amber-950 flex-1" />
+                         <button onclick="removeMinistryRow(${wkIdx}, ${mIdx})" class="text-red-600 hover:text-red-800 text-xs font-bold px-1.5" title="პუნქტის წაშლა">✖</button>`
+                      : `<div class="text-xs font-bold text-amber-950">${escapeHtml(m.title)}:</div>`
+                    }
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                    <div class="bg-white rounded-lg p-2 border border-slate-200 flex items-center gap-2">
+                      <span class="sm:hidden px-1.5 py-0.5 rounded bg-amber-700 text-white text-[10px] font-bold shrink-0">1-კლ</span>
+                      <div class="flex-1">
+                        ${isAdmin
+                          ? `<input type="text" list="publishers-datalist" value="${escapeHtml(m.class1)}" onchange="updateMinistryField(${wkIdx}, ${mIdx}, 'class1', this.value)" placeholder="1-კლასი (მოსწავლე / დამხმარე)" class="w-full px-2 py-1 rounded border border-amber-300 bg-amber-50/40 text-xs sm:text-sm font-semibold" />`
+                          : `<span class="font-semibold text-slate-900">${highlightName(m.class1)}</span>`
+                        }
+                      </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-2 border border-slate-200 flex items-center gap-2">
+                      <span class="sm:hidden px-1.5 py-0.5 rounded bg-slate-600 text-white text-[10px] font-bold shrink-0">2-კლ</span>
+                      <div class="flex-1">
+                        ${isAdmin
+                          ? `<input type="text" list="publishers-datalist" value="${escapeHtml(m.class2)}" onchange="updateMinistryField(${wkIdx}, ${mIdx}, 'class2', this.value)" placeholder="2-კლასი (მოსწავლე / დამხმარე)" class="w-full px-2 py-1 rounded border border-amber-300 bg-amber-50/40 text-xs sm:text-sm font-semibold" />`
+                          : `<span class="font-semibold text-slate-900">${highlightName(m.class2)}</span>`
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- SECTION 3: LIVING AS CHRISTIANS -->
+          <div class="sec-living px-4 py-1.5 text-xs sm:text-sm font-bold tracking-wide uppercase flex items-center justify-between">
+            <div class="flex items-center gap-1.5"><span>🐑</span> <span>ქრისტიანული ცხოვრება</span></div>
+            ${isAdmin ? `<button onclick="addLivingRow(${wkIdx})" class="px-2 py-0.5 rounded bg-white text-rose-950 text-xs font-bold shadow-sm hover:bg-rose-50">+ პუნქტის დამატება</button>` : ''}
+          </div>
+          <div class="p-3 sm:p-4 space-y-2.5 text-xs sm:text-sm">
+            ${(wk.living || []).map((l, lIdx) => `
+              <div class="bg-rose-50/40 border border-rose-200/80 rounded-lg p-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div class="flex-1">
+                  ${isAdmin
+                    ? `<input type="text" value="${escapeHtml(l.title)}" onchange="updateLivingField(${wkIdx}, ${lIdx}, 'title', this.value)" placeholder="თემის სათაური (მაგ: ადგილობრივი მოთხოვნილებები)" class="w-full px-2 py-1 rounded border border-rose-300 bg-white text-xs sm:text-sm font-bold text-rose-950" />`
+                    : `<span class="font-bold text-rose-950">${escapeHtml(l.title)}:</span>`
+                  }
+                </div>
+                <div class="flex items-center gap-2 sm:w-1/2">
+                  <div class="flex-1">
+                    ${isAdmin
+                      ? `<input type="text" list="publishers-datalist" value="${escapeHtml(l.speaker)}" onchange="updateLivingField(${wkIdx}, ${lIdx}, 'speaker', this.value)" placeholder="ჩამტარებელი" class="w-full px-2 py-1 rounded border border-amber-400 bg-amber-50/60 text-xs sm:text-sm font-semibold" />`
+                      : `<span class="font-semibold text-slate-900">${highlightName(l.speaker)}</span>`
+                    }
+                  </div>
+                  ${isAdmin ? `<button onclick="removeLivingRow(${wkIdx}, ${lIdx})" class="text-red-600 hover:text-red-800 text-xs font-bold px-1">✖</button>` : ''}
+                </div>
+              </div>
+            `).join('')}
+
+            <!-- Congregation Bible Study -->
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-200">
+              <div class="text-xs font-bold text-rose-900 mb-2">კრების ბიბლიის შესწავლა (30 წთ):</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div class="flex items-center gap-2">
+                  <span class="text-slate-600 font-medium shrink-0">ჩამტარებელი:</span>
+                  <div class="flex-1">${renderField(wkIdx, 'cbsConductor', wk.cbsConductor)}</div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-slate-600 font-medium shrink-0">წამკითხველი:</span>
+                  <div class="flex-1">${renderField(wkIdx, 'cbsReader', wk.cbsReader)}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Closing Prayer -->
+            <div class="flex items-center justify-end gap-2 pt-1">
+              <span class="text-slate-600 font-medium">დასკვნითი ლოცვა:</span>
+              <div class="w-56">${renderField(wkIdx, 'closingPrayer', wk.closingPrayer)}</div>
+            </div>
+          </div>
+        </section>`;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // Admin State Mutation Helpers
+    function updateWeekField(wkIdx, key, val) {
+      if (!appState.weeks[wkIdx]) return;
+      appState.weeks[wkIdx][key] = val;
+    }
+
+    function updateMinistryField(wkIdx, mIdx, key, val) {
+      if (!appState.weeks[wkIdx] || !appState.weeks[wkIdx].ministry[mIdx]) return;
+      appState.weeks[wkIdx].ministry[mIdx][key] = val;
+    }
+
+    function addMinistryRow(wkIdx) {
+      if (!appState.weeks[wkIdx]) return;
+      appState.weeks[wkIdx].ministry.push({
+        title: 'საუბრის წამოწყება',
+        class1: '',
+        class2: ''
+      });
+      renderAll();
+    }
+
+    function removeMinistryRow(wkIdx, mIdx) {
+      if (!appState.weeks[wkIdx]) return;
+      appState.weeks[wkIdx].ministry.splice(mIdx, 1);
+      renderAll();
+    }
+
+    function updateLivingField(wkIdx, lIdx, key, val) {
+      if (!appState.weeks[wkIdx] || !appState.weeks[wkIdx].living[lIdx]) return;
+      appState.weeks[wkIdx].living[lIdx][key] = val;
+    }
+
+    function addLivingRow(wkIdx) {
+      if (!appState.weeks[wkIdx]) return;
+      appState.weeks[wkIdx].living.push({
+        title: 'ადგილობრივი მოთხოვნილებები',
+        speaker: ''
+      });
+      renderAll();
+    }
+
+    function removeLivingRow(wkIdx, lIdx) {
+      if (!appState.weeks[wkIdx]) return;
+      appState.weeks[wkIdx].living.splice(lIdx, 1);
+      renderAll();
+    }
+
+    function addNewWeek() {
+      const dateName = prompt('შეიყვანეთ ახალი კვირის თარიღი (მაგ: 24 ნოემბერი):', 'ახალი კვირა');
+      if (!dateName) return;
+      appState.weeks.unshift({
+        id: 'w-' + Date.now(),
+        date: dateName.trim(),
+        chairman: '',
+        openingPrayer: '',
+        treasuresTalk: '',
+        spiritualGems: '',
+        bibleReading1: '',
+        bibleReading2: '',
+        ministry: [
+          { title: 'საუბრის წამოწყება', class1: '', class2: '' },
+          { title: 'ინტერესის გაღვივება', class1: '', class2: '' },
+          { title: 'მოწაფეების მომზადება', class1: '', class2: '' }
+        ],
+        living: [
+          { title: 'ადგილობრივი მოთხოვნილებები', speaker: '' }
+        ],
+        cbsConductor: '',
+        cbsReader: '',
+        closingPrayer: ''
+      });
+      selectedWeekFilter = 'ALL';
+      renderAll();
+      showToast('➕ დაემატა ახალი კვირა — არ დაგავიწყდეთ „შენახვაზე“ დაჭერა!');
+    }
+
+    function moveWeek(wkIdx, dir) {
+      const target = wkIdx + dir;
+      if (target < 0 || target >= appState.weeks.length) return;
+      const temp = appState.weeks[wkIdx];
+      appState.weeks[wkIdx] = appState.weeks[target];
+      appState.weeks[target] = temp;
+      renderAll();
+    }
+
+    function deleteWeek(wkIdx) {
+      const wk = appState.weeks[wkIdx];
+      if (!wk) return;
+      if (!confirm(`ნამდვილად გსურთ წაშალოთ კვირა: „${wk.date}“?`)) return;
+      appState.weeks.splice(wkIdx, 1);
+      renderAll();
+    }
+
+    async function saveToCloud() {
+      const btn = document.getElementById('save-cloud-btn');
+      const fb = document.getElementById('save-feedback');
+      const origText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> <span>ინახება...</span>';
+
+      try {
+        // Refresh current sheet signature so Website edit takes priority
+        const sheetResp = await fetchGoogleSheetLive(appState.sheetId || DEFAULT_SHEET_ID);
+        if (sheetResp && sheetResp.sig) {
+          currentLiveSheetSig = String(sheetResp.sig);
+        }
+
+        appState.updatedAt = Date.now();
+        appState.sheetSig = currentLiveSheetSig || appState.sheetSig || '';
+
+        const token = getGithubCloudToken();
+        const apiUrl = `https://api.github.com/repos/${GH_REPO_SLUG}/contents/schedule-data.json`;
+        const headers = {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28'
+        };
+
+        let existingSha = null;
+        try {
+          const getRes = await fetch(`${apiUrl}?t=${Date.now()}`, { headers, cache: 'no-store' });
+          if (getRes.ok) {
+            const meta = await getRes.json();
+            if (meta && meta.sha) existingSha = meta.sha;
+          }
+        } catch (e) {}
+
+        const bodyObj = {
+          message: 'Update congregation schedule from Admin Panel',
+          content: utf8ToBase64(JSON.stringify(appState, null, 2)),
+          branch: 'main'
+        };
+        if (existingSha) bodyObj.sha = existingSha;
+
+        const putRes = await fetch(apiUrl, {
+          method: 'PUT',
+          headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
+          body: JSON.stringify(bodyObj)
+        });
+
+        if (putRes.ok) {
+          fb.textContent = '✅ ცვლილებები წარმატებით შეინახა! ვინც Viber-ში ბმულს გახსნის, ყველასთან უკვე განახლებული განრიგი გამოჩნდება.';
+          fb.classList.remove('hidden');
+          showToast('✅ განრიგი განახლდა!');
+        } else {
+          throw new Error('GitHub API status ' + putRes.status);
+        }
+      } catch (err) {
+        alert('შენახვის შეცდომა: შეამოწმეთ ინტერნეტ-კავშირი.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = origText;
+      }
+    }
+
+    function copyViberLink() {
+      const url = window.location.href.split('#')[0];
+      const text = `📖 ჩვენი ქრისტიანული ცხოვრება და მსახურება — შეხვედრის განრიგი:\n${url}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('💜 Viber-ში ჩასასმელი ბმული დაკოპირებულია!');
+        });
+      } else {
+        prompt('დააკოპირეთ ეს ბმული Viber-ში ჩასაგდებად:', url);
+      }
+    }
+
+    // Initial load & auto-refresh poll every 15 seconds
+    loadSchedule(false);
+    setInterval(() => loadSchedule(true), 15000);
+  </script>
+</body>
+</html>
